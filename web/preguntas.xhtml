@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{preguntasBean.listar('F')}" />
+                <f:event type="preRenderView" listener="#{empresaBean.listar('F')}" />
+                <f:event type="preRenderView" listener="#{usuarioBean.listar('F')}" />
+                <h:form id="frm" >
+
+                    <p:commandButton value="Nuevo" oncomplete="PF('wdlgDatos').show();" actionListener="#{preguntasBean.setAccion('Registrar')}" update=":dlgDatos" /><br/>
+
+
+
+                    <p:dataTable id="data" value="#{preguntasBean.lstpre}" var="tipo"  >
+                        <p:column headerText="NUMERO PREGUNTA" >
+                            <p:outputLabel value="#{tipo.num_pregunta}"/>
+                        </p:column>
+                        <p:column headerText="EMPRESA" >
+                            <p:outputLabel value="#{tipo.id_empresa}"/>
+                        </p:column>
+                        <p:column headerText="CALIDAD" >
+                            <p:outputLabel value="#{tipo.calidad}"/>
+                        </p:column>
+                        <p:column headerText="SERVICIO" >
+                            <p:outputLabel value="#{tipo.servicio}"/>
+                        </p:column>
+                        <p:column headerText="ID USUARIO" >
+                            <p:outputLabel value="#{tipo.id_usuario}"/>
+                        </p:column>
+                        <!--
+                                                <p:column headerText="Modificar">
+                                                    <p:commandLink value="Modificar" actionListener="#{preguntasBean.leerID(tipo)}"  oncomplete="PF('wdlgDatos').show();" update=":dlgDatos"/>
+                                                </p:column>
+                        
+                                                <p:column headerText="Eliminar">
+                                                    <p:commandLink value="Eliminar" actionListener="#{preguntasBean.eliminar(tipo)}" update="data"/>
+                                                </p:column>-->
+                    </p:dataTable>
+                </h:form>
+
+                <p:dialog header="Datos" widgetVar="wdlgDatos" id="dlgDatos" >
+                    <h:form>
+                        <p:outputLabel value="Num Pregutna" />
+                        <p:inputText value="#{preguntasBean.preguntas.num_pregunta}" /><br/>
+                        <p:outputLabel value="Empresa" />
+                        <p:selectOneMenu value="#{preguntasBean.preguntas.id_empresa}" >
+                            <f:selectItems value="#{empresaBean.lstempr}" var="user" itemLabel="#{user.nombre}" itemValue="#{user.id_empresa}" />
+                        </p:selectOneMenu><br/>
+                        <p:outputLabel value="Calidad" />
+                        <p:inputText value="#{preguntasBean.preguntas.calidad}" /><br/>
+                        <p:outputLabel value="Servicio" />
+                        <p:inputText value="#{preguntasBean.preguntas.servicio}" /><br/>
+                        <p:outputLabel value="Usuario" />
+                        <p:selectOneMenu value="#{preguntasBean.preguntas.id_usuario}" >
+                            <f:selectItems value="#{usuarioBean.lstusu}" var="user" itemLabel="#{user.id_usuario}" itemValue="#{user.id_usuario}" />
+                        </p:selectOneMenu><br/>                  
+                        <p:commandButton value="#{preguntasBean.accion}" actionListener="#{preguntasBean.operar()}" oncomplete="PF('wdlgDatos').hide();" update=":frm:data"/>
+                        <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();" />
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

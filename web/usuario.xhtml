@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{usuarioBean.listar('F')}" />
+                <h:form id="frm">
+
+                    <!--<p:commandButton value="Nuevo" oncomplete="PF('wdlgDatos').show();" actionListener="#{usuarioBean.setAccion('Registrar')}" update=":dlgDatos" /><br/>
+                    -->
+                    <p:spacer> </p:spacer>
+                    <p:dataTable id="data" value="#{usuarioBean.lstusu}" var="tipo" >
+                        <p:column headerText="ID USUARIO" >
+                            <p:outputLabel value="#{tipo.id_usuario}"/>
+                        </p:column>
+                        <p:column headerText="NOMBRE" >
+                            <p:outputLabel value="#{tipo.nombre}"/>
+                        </p:column>
+                        <p:column headerText="APELLIDO" >
+                            <p:outputLabel value="#{tipo.apellido}"/>
+                        </p:column>
+                        <p:column headerText="TELEFONO" >
+                            <p:outputLabel value="#{tipo.telefono}"/>
+                        </p:column>
+                        <p:column headerText="MAIL" >
+                            <p:outputLabel value="#{tipo.mail}"/>
+                        </p:column>
+                        <p:column headerText="DIRECCION" >
+                            <p:outputLabel value="#{tipo.direccion}"/>
+                        </p:column><!--
+                        <p:column headerText="USER" >
+                            <p:outputLabel value="#{tipo.user}"/>
+                        </p:column>
+                        <p:column headerText="PASS" >
+                            <p:outputLabel value="#{tipo.pass}"/>
+                        </p:column>
+
+                        <p:column headerText="Modificar">
+                            <p:commandLink value="Modificar" actionListener="#{usuarioBean.leerID(tipo)}"  oncomplete="PF('wdlgDatos').show();" update=":dlgDatos"/>
+                        </p:column>
+
+                        <p:column headerText="Eliminar">
+                            <p:commandLink value="Eliminar" actionListener="#{usuarioBean.eliminar(tipo)}" update="data"/>
+                        </p:column>-->
+                    </p:dataTable>
+                </h:form>
+
+                <p:dialog header="Datos" widgetVar="wdlgDatos" id="dlgDatos" >
+                    <h:form>
+                        <p:outputLabel value="Id_usuario" />
+                        <p:inputText value="#{usuarioBean.usuario.id_usuario}" /><br/>
+                        <p:outputLabel value="Nombre" />
+                        <p:inputText value="#{usuarioBean.usuario.nombre}" /><br/>
+                        <p:outputLabel value="Apellido" />
+                        <p:inputText value="#{usuarioBean.usuario.apellido}" /><br/>
+                        <p:outputLabel value="Telefono" />
+                        <p:inputText value="#{usuarioBean.usuario.telefono}" /><br/>
+                        <p:outputLabel value="Mail" />
+                        <p:inputText value="#{usuarioBean.usuario.mail}" /><br/>
+                        <p:outputLabel value="Direccion" />
+                        <p:inputText value="#{usuarioBean.usuario.direccion}" /><br/>
+                        <p:outputLabel value="User" />
+                        <p:inputText value="#{usuarioBean.usuario.user}" /><br/>
+                        <p:outputLabel value="Pass" />
+                        <p:inputText value="#{usuarioBean.usuario.pass}" /><br/>
+                        <p:commandButton value="#{usuarioBean.accion}" actionListener="#{usuarioBean.operar()}" oncomplete="PF('wdlgDatos').hide();" update=":frm:data"/>
+                        <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();" />
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:event type="preRenderView" listener="#{usuarioBean.listar('F')}" />
+        <h:graphicImage url="resources/imagenes/3.jpg" />
+        <h:form id="loginForm">
+            <p:growl id="msg" showDetail="true" life="3000" />
+            <p:panel header="Login" style="width: 360px;">
+                <h:panelGrid id="loginPanel" columns="2">
+                    <h:outputText value="Username" />
+                    <p:inputText id="username" value="#{loginBean.user}" ></p:inputText>
+                    <p:spacer></p:spacer>
+                    <p:message for="username" ></p:message>
+                    <h:outputText value="Password" />
+                    <p:password id="password" value="#{loginBean.pass}"  feedback="false"></p:password>
+                    <p:spacer></p:spacer>
+                    <p:message for="password"></p:message>
+                    <p:spacer></p:spacer>
+                    <p:commandButton action="#{loginBean.login()}" value="Login" update="loginForm" ajax="true"></p:commandButton>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+        
+        <h:form >
+            <h3>No estas registrado, Registrate es gratis</h3><br/>
+            <p:commandButton value="Nuevo" oncomplete="PF('wdlgDatos').show();" actionListener="#{usuarioBean.setAccion('Registrar')}" update=":dlgDatos" /><br/>
+        </h:form>
+
+        <p:dialog header="Datos" widgetVar="wdlgDatos" id="dlgDatos" >
+            <h:form>
+                <p:outputLabel value="Id_usuario" />
+                <p:inputText value="#{usuarioBean.usuario.id_usuario}" /><br/>
+                <p:outputLabel value="Nombre" />
+                <p:inputText value="#{usuarioBean.usuario.nombre}" /><br/>
+                <p:outputLabel value="Apellido" />
+                <p:inputText value="#{usuarioBean.usuario.apellido}" /><br/>
+                <p:outputLabel value="Telefono" />
+                <p:inputText value="#{usuarioBean.usuario.telefono}" /><br/>
+                <p:outputLabel value="Mail" />
+                <p:inputText value="#{usuarioBean.usuario.mail}" /><br/>
+                <p:outputLabel value="Direccion" />
+                <p:inputText value="#{usuarioBean.usuario.direccion}" /><br/>
+                <p:outputLabel value="User" />
+                <p:inputText value="#{usuarioBean.usuario.user}" /><br/>
+                <p:outputLabel value="Pass" />
+                <p:inputText value="#{usuarioBean.usuario.pass}" /><br/>
+                <p:commandButton value="#{usuarioBean.accion}" actionListener="#{usuarioBean.operar()}" oncomplete="PF('wdlgDatos').hide();"/>
+                <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();" />
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

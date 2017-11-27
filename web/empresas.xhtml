@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{empresaBean.listar('F')}" />
+                <h:form id="frm">
+
+                    <p:commandButton value="Nuevo" oncomplete="PF('wdlgDatos').show();" actionListener="#{empresaBean.setAccion('Registrar')}" update=":dlgDatos" /><br/>
+
+
+                    <p:dataTable id="data" value="#{empresaBean.lstempr}" var="tipo" >
+                        <p:column headerText="ID EMPRESA" >
+                            <p:outputLabel value="#{tipo.id_empresa}"/>
+                        </p:column>
+                        <p:column headerText="NOMBRE" >
+                            <p:outputLabel value="#{tipo.nombre}"/>
+                        </p:column>
+
+                        <!--
+                        <p:column headerText="Modificar">
+                            <p:commandLink value="Modificar" actionListener="#{empresaBean.leerID(tipo)}"  oncomplete="PF('wdlgDatos').show();" update=":dlgDatos"/>
+                        </p:column>
+
+                        <p:column headerText="Eliminar">
+                            <p:commandLink value="Eliminar" actionListener="#{empresaBean.eliminar(tipo)}" update="data"/>
+                        </p:column>-->
+                    </p:dataTable>
+                </h:form>
+
+                <p:dialog header="Datos" widgetVar="wdlgDatos" id="dlgDatos" >
+                    <h:form>
+                        <p:outputLabel value="Id_Empresa" />
+                        <p:inputText value="#{empresaBean.empr.id_empresa}" /><br/>
+                        <p:outputLabel value="Nombre" />
+                        <p:inputText value="#{empresaBean.empr.nombre}" /><br/>
+                        <p:commandButton value="#{empresaBean.accion}" actionListener="#{empresaBean.operar()}" oncomplete="PF('wdlgDatos').hide();" update=":frm:data"/>
+                        <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();" />
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
